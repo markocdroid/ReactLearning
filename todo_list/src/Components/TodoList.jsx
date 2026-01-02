@@ -40,9 +40,9 @@ const TodoList = () => {
     return (
         <>
             <div className="todo-container">
-           
+
                 <h1 className="title">My Todo List</h1>
-           
+
                 <div className="input-container">
                     <input
                         type="text"
@@ -52,11 +52,11 @@ const TodoList = () => {
                         onChange={(input) => { setHeadingInput(input.target.value); }}
                     />
                     <button className="add-list-button" onClick={handleAddTodo}>Add Heading</button>
-               
+
                 </div>
-           
+
             </div >
-           
+
             <div className="todo_main">
                 {todos.map((todo, index) => ( // Iterate over each todo item in the todos array
                     <div key={index} className="todo-card">
@@ -85,11 +85,11 @@ const TodoList = () => {
                                 className="list-input"
                                 placeholder="Add List"
                                 value={listInputs[index] || ''}// Use the value from listInputs array based on the current heading index
-                                onChange={(e) => handleListInputChange(index, e.target.value)} />
+                                onChange={(input) => handleListInputChange(index, input.target.value)} />
                             {/* Button to add the list item to the corresponding heading */}
-                    
+
                             <button className="add-list-button" onClick={() => handleAddList(index)}>Add List</button>
-                    
+
                         </div>
 
                     </div>
