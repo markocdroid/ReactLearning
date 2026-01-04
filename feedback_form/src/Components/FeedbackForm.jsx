@@ -5,16 +5,40 @@ const FeedbackForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        feedback: ''
+        feedback: '',
+        rating: ''
     });
+
+    const initRating = [
+        { label: 1, checked: false },
+        { label: 2, checked: false },
+        { label: 3, checked: false },
+        { label: 4, checked: false },
+        { label: 5, checked: false },
+    ];
+
+    const [ratings, setRatings] = useState(initRating);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({
             ...formData,
             [name]: value
-        });
+        })
+
     };
+
+    const handleCheckChange = (event) => {
+        handleChange(event);
+        const { name, value } = event.target;
+        const updatedRatings = ratings.map((item) => ({
+            ...item,
+            checked: item.label === Number(value)
+          }));
+          console.log(value);
+          setRatings(updatedRatings);
+        
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -22,6 +46,7 @@ const FeedbackForm = () => {
       Name: ${formData.name}
       Email: ${formData.email}
       Feedback: ${formData.feedback}
+      Rating: ${formData.rating}
     `;
 
         const isConfirmed = window.confirm(`Please confirm your details:\n\n${confirmationMessage}`);
@@ -30,8 +55,10 @@ const FeedbackForm = () => {
             setFormData({
                 name: '',
                 email: '',
-                feedback: ''
+                feedback: '',
+                rating: ''
             });
+            setRatings(initRating)
             alert('Thank you for your valuable feedback!');
         }
     };
@@ -63,7 +90,25 @@ const FeedbackForm = () => {
                     value={formData.feedback}
                     onChange={handleChange}
                 ></textarea>
+
+                <span>Rate Us:</span>
+                {
+                    ratings.map((item) => (
+                        <div className='feedback-radio'>
+                            <p> <input
+                                type="radio"
+                                name="rating"
+                                value={item.label}
+                                checked={item.checked}
+                                onChange={handleCheckChange}
+                            /> {item.label}</p>
+
+                        </div>
+                    ))
+                }
+
                 <button type="submit">Submit Feedback</button>
+
             </form>
         </>
     );
